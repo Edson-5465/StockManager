@@ -1,4 +1,5 @@
 import "../styles/HomePage.css";
+import { Link } from "react-router-dom";
 
 export default function HomePage() {
   return (
@@ -6,8 +7,8 @@ export default function HomePage() {
       <header>
         <h1>StockManager</h1>
         <nav>
-          <a href="#">Login</a>
-          <a href="#">Register</a>
+          <Link to="/login">Login</Link>
+          <Link to="/registerPage">Register</Link>
           <a href="#features">Docs</a>
         </nav>
       </header>
@@ -16,7 +17,7 @@ export default function HomePage() {
         <h2>Smart Stock Management Made Simple</h2>
         <p>Track batches, expiry dates, and automate reorders — all in one place.</p>
         <div>
-          <a href="#" className="btn-primary">Get Started</a>
+          <Link to="/registerPage" className="btn-primary">Get Started</Link>
           <a href="#features" className="btn-secondary">Learn More</a>
         </div>
       </section>
