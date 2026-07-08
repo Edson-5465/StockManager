@@ -1,0 +1,75 @@
+.admin-container {
+  padding: 2rem;
+  background: #f4f6f9;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.admin-container h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.admin-table th {
+  background: #4a90e2;
+  color: #fff;
+}
+
+.admin-table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+.admin-table tr:hover {
+  background: #eef6ff;
+}
+
+.status {
+  text-align: center;
+  margin-top: 2rem;
+  color: #555;
+}
+
+.status.error {
+  color: red;
+}
+.approve-btn {
+  background: #28a745;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  margin-right: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.approve-btn:hover {
+  background: #218838;
+}
+
+.reject-btn {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.reject-btn:hover {
+  background: #c82333;
+}
