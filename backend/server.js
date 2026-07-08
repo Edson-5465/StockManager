@@ -7,10 +7,13 @@ import db from "./config/db.js";
 import session from "express-session";
 import passport from "passport";
 import configurePassport from "./config/passport.js";
+import stockRoutes from "./routes/stockRoutes.js"
+import "./utils/batchScheduler.js"; 
+
 
 dotenv.config();
 
-const app = express(); // <-- declare app first
+const app = express();
 
 // Middleware
 app.use(express.json());
@@ -31,7 +34,7 @@ configurePassport(passport);
 
 // Routes
 app.use("/api/users", userRoutes);
-console.log("User routes mounted at /api/users");
+app.use("/api/stock", stockRoutes);
 
 // Health check
 app.get("/", (req, res) => {

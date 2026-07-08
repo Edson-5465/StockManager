@@ -44,6 +44,42 @@ function AdminDashboard() {
       alert(`Error: ${err.message}`);
     }
   };
+   const handleDelete = async (id) => {
+  try {
+    const res = await fetch(`http://localhost:5000/api/users/delete/${id}`, {
+      method: "DELETE",
+      credentials: "include"
+    });
+    const data = await res.json();
+    if (res.ok) {
+      alert("User deleted successfully");
+      fetchUsers();
+    } else {
+      alert(data.error || "Failed to delete user");
+    }
+  } catch (err) {
+    alert(`Error: ${err.message}`);
+  }
+};
+ const handleRoleChange = async (id, newRole) => {
+  try {
+    const res = await fetch(`http://localhost:5000/api/users/role/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ role: newRole }),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      alert("Role updated successfully");
+      fetchUsers();
+    } else {
+      alert(data.error || "Failed to update role");
+    }
+  } catch (err) {
+    alert(`Error: ${err.message}`);
+  }
+};
 
   const handleLogout = async () => {
     try {
@@ -108,7 +144,21 @@ function AdminDashboard() {
                       Approve
                     </button>
                   )}
-                  {/* No reject button after approve */}
+                   <button
+                       className="delete-btn"
+                       onClick={() => handleDelete(u.id)}
+                      >
+                      Delete
+                        </button>
+                    <select
+                       value={u.role}
+                       onChange={(e) => handleRoleChange(u.id, e.target.value)}
+                       className="role-select"
+                        >
+                      <option value="staff">Staff</option>
+                      <option value="manager">Manager</option>
+                      <option value="admin">Admin</option>
+                    </select> 
                 </td>
               </tr>
             ))}

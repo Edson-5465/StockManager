@@ -1,0 +1,35 @@
+.manager-dashboard {
+  padding: var(--space-lg);
+  background-color: #fff;
+  font-family: var(--font-family);
+}
+
+.manager-dashboard h2 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-md);
+  color: var(--color-bg-dark);
+}
+
+.manager-dashboard h3 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin: var(--space-md) 0 var(--space-sm);
+  color: var(--color-text-muted);
+}
+
+.manager-dashboard li {
+  background: var(--color-bg-light);
+  border: 1px solid var(--color-border);
+  padding: var(--space-sm);
+  margin-bottom: var(--space-xs);
+  border-radius: var(--radius-md);
+}
+
+.manager-dashboard .chart-container {
+  margin-top: var(--space-lg);
+  background: var(--color-bg-light);
+  padding: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}

@@ -3,7 +3,9 @@ import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import AdminDashboard from "./pages/AdminDashboard";
-
+import "./styles/theme.css";
+import ManagerDashboard from "./pages/ManagerDashboard";
+import StaffDashboard from "./pages/StaffDashboard";
 export default function App() {
   return (
     <Router>
@@ -12,6 +14,8 @@ export default function App() {
         <Route path="/registerPage" element={<RegisterPage />} />
        <Route path="/login" element={<LoginPage />} />
        <Route path="/AdminDashboard" element={<AdminDashboard />} />
+       <Route path="/ManagerDashboard" element={<ManagerDashboard/>}/>
+       <Route path="/StaffDashboard" element={<StaffDashboard/>}/>
       </Routes>
     </Router>
   );
