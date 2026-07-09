@@ -31,3 +31,13 @@
   --radius-md: 6px;
   --radius-lg: 8px;
 }
+:root {
+  --color-background: #f4f6f9;
+  --color-card: #ffffff;
+  --color-primary: #007bff;
+  --color-primary-dark: #0056b3;
+  --color-secondary: #28a745;
+  --color-text: #333333;
+  --color-border: #cccccc;
+  --font-family: "Segoe UI", Arial, sans-serif;
+}

@@ -76,14 +76,45 @@ const StaffDashboard = () => {
       });
   };
 
+  const formatDate = (dateStr) => {
+  // If already YYYY-MM-DD, return as is
+  if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
+
+  // If DD/MM/YYYY → convert to YYYY-MM-DD
+  const parts = dateStr.split("/");
+  if (parts.length === 3) {
+    const [day, month, year] = parts;
+    return `${year}-${month}-${day}`;
+  }
+
+  return dateStr; // fallback
+};
+
   const handleAddBatch = async () => {
-    await fetch("http://localhost:5000/api/stock/batches", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newBatch)
-    });
-    alert("Batch added successfully");
+  const payload = {
+    item_id: parseInt(newBatch.item_id, 10), // ensure integer
+    batch_number: newBatch.batch_number,
+    quantity: parseInt(newBatch.quantity, 10),
+    expiry_date: formatDate(newBatch.expiry_date),
+    status: "GOOD" // optional, backend defaults to GOOD
   };
+
+  console.log("Sending batch payload:", payload);
+
+  const res = await fetch("http://localhost:5000/api/stock/batches", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+
+  const data = await res.json();
+  if (res.ok) {
+    alert(`Batch ${data.batch_id} added successfully`);
+  } else {
+    alert(`Error: ${data.error}`);
+  }
+};
+
 
   return (
     <div className="staff-dashboard">

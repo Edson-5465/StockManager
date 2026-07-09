@@ -2,8 +2,16 @@ import db from "../config/db.js";
 
 export const addBatch = async (batch) => {
   const [result] = await db.query(
-    "INSERT INTO stock_batches (item_id, batch_number, quantity, expiry_date) VALUES (?, ?, ?, ?)",
-    [batch.item_id, batch.batch_number, batch.quantity, batch.expiry_date]
+    `INSERT INTO stock_batches 
+      (item_id, batch_number, quantity, expiry_date, status) 
+     VALUES (?, ?, ?, ?, ?)`,
+    [
+      batch.item_id,
+      batch.batch_number,
+      batch.quantity,
+      batch.expiry_date,
+      batch.status || "GOOD" // default if not provided
+    ]
   );
   return result.insertId;
 };

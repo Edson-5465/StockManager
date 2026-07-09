@@ -24,12 +24,15 @@ export const listItems = async (req, res) => {
 // Batches
 export const createBatch = async (req, res) => {
   try {
+    console.log("Batch request body:", req.body);
     const id = await BatchModel.addBatch(req.body);
     res.json({ message: "Batch added", batch_id: id });
   } catch (err) {
+    console.error("Batch insert error:", err);
     res.status(500).json({ error: err.message });
   }
 };
+
 
 export const listBatches = async (req, res) => {
   try {
