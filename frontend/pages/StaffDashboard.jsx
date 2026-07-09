@@ -3,6 +3,8 @@ import Tesseract from "tesseract.js";
 import Webcam from "react-webcam";
 import "../styles/theme.css";
 import "../styles/StaffDashboard.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const StaffDashboard = () => {
   const [items, setItems] = useState([]);
@@ -147,18 +149,50 @@ const StaffDashboard = () => {
           <p>OCR Result: {ocrResult}</p>
         </div>
       )}
+            
+     {/* Batch Entry Form */}
+<div>
+  <h3>Add Batch</h3>
 
-      {/* Batch Entry Form */}
-      <div>
-        <h3>Add Batch</h3>
-        <input placeholder="Item ID" value={newBatch.item_id} onChange={(e) => setNewBatch({ ...newBatch, item_id: e.target.value })} />
-        <input placeholder="Batch Number" value={newBatch.batch_number} onChange={(e) => setNewBatch({ ...newBatch, batch_number: e.target.value })} />
-        <input placeholder="Quantity" type="number" value={newBatch.quantity} onChange={(e) => setNewBatch({ ...newBatch, quantity: e.target.value })} />
-        <input placeholder="Expiry Date" type="text" value={newBatch.expiry_date} onChange={(e) => setNewBatch({ ...newBatch, expiry_date: e.target.value })} />
-        <input placeholder="SKU" type="text" value={newBatch.sku} onChange={(e) => setNewBatch({ ...newBatch, sku: e.target.value })} />
-        <input placeholder="Product Name" type="text" value={newBatch.name} onChange={(e) => setNewBatch({ ...newBatch, name: e.target.value })} />
-        <button onClick={handleAddBatch}>Add Batch</button>
-      </div>
+  {/* Item Dropdown */}
+  <select
+    value={newBatch.item_id}
+    onChange={(e) => setNewBatch({ ...newBatch, item_id: e.target.value })}
+  >
+    <option value="">Select Item</option>
+    {items.map((item) => (
+      <option key={item.item_id} value={item.item_id}>
+        {item.name} ({item.sku})
+      </option>
+    ))}
+  </select>
+
+  <input
+    placeholder="Batch Number"
+    value={newBatch.batch_number}
+    onChange={(e) => setNewBatch({ ...newBatch, batch_number: e.target.value })}
+  />
+  <input
+    placeholder="Quantity"
+    type="number"
+    value={newBatch.quantity}
+    onChange={(e) => setNewBatch({ ...newBatch, quantity: e.target.value })}
+  />
+  <DatePicker
+  selected={newBatch.expiry_date ? new Date(newBatch.expiry_date) : null}
+  onChange={(date) =>
+    setNewBatch({
+      ...newBatch,
+      expiry_date: date.toISOString().split("T")[0] // normalize to YYYY-MM-DD
+    })
+  }
+  minDate={new Date()} // only allow today or future dates
+  placeholderText="Select Expiry Date"
+  dateFormat="yyyy-MM-dd"
+/>
+<button onClick={handleAddBatch}>Add Batch</button>
+</div>
+
 
       {/* Item List */}
       <h3>Current Items</h3>

@@ -1,6 +1,7 @@
 import * as ItemModel from "../models/stockItemModel.js";
 import * as BatchModel from "../models/stockBatchModel.js";
 import * as TxnModel from "../models/stockTransactionModel.js";
+import db from "../config/db.js";
 
 // Items
 export const createItem = async (req, res) => {
@@ -21,18 +22,45 @@ export const listItems = async (req, res) => {
   }
 };
 
-// Batches
+
+const getBatchStatus = (expiryDate) => {
+  const today = new Date();
+  const exp = new Date(expiryDate);
+
+  if (exp < today) return "EXPIRED";
+
+  const diffDays = Math.ceil((exp - today) / (1000 * 60 * 60 * 24));
+  if (diffDays <= 3) return "NEAR_EXPIRY";
+
+  return "GOOD";
+};
+
 export const createBatch = async (req, res) => {
   try {
-    console.log("Batch request body:", req.body);
-    const id = await BatchModel.addBatch(req.body);
-    res.json({ message: "Batch added", batch_id: id });
+    const { item_id, batch_number, quantity, expiry_date } = req.body;
+
+    const status = getBatchStatus(expiry_date);
+
+    //  Reject expired batches
+    if (status === "EXPIRED") {
+      return res.status(400).json({
+        error: "Cannot add batch. Expiry date is already past."
+      });
+    }
+
+    const [result] = await db.query(
+      `INSERT INTO stock_batches (item_id, batch_number, quantity, expiry_date, status)
+       VALUES (?, ?, ?, ?, ?)`,
+      [item_id, batch_number, quantity, expiry_date, status]
+    );
+
+    res.json({ message: "Batch added", batch_id: result.insertId, status });
   } catch (err) {
-    console.error("Batch insert error:", err);
     res.status(500).json({ error: err.message });
   }
 };
 
+ 
 
 export const listBatches = async (req, res) => {
   try {
